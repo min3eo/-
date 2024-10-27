@@ -1,0 +1,21 @@
+@use '../styles/global.scss' as *;
+
+.Button {
+    background-color: $color-gray-20;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+.Button_POSITIVE {
+    background-color: $color-green-20;
+    color: $color-white;
+}
+
+.Button_NEGATIVE {
+    background-color: $color-red-40;
+    color: $color-white;
+}
