@@ -1,16 +1,56 @@
+import { useState, useContext } from "react";
+import { DiaryStateContext } from "../../App";
+
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import DiaryList from "../../components/DiaryList";
 
+function getMonthlyData(pivotDate, data) {
+  const beginTime = new Date(
+    pivotDate.getFullYear(),
+    pivotDate.getMonth(), 
+    1,
+    0,
+    0,
+    0
+  ).getTime();
+  const endTime = new Date(
+    pivotDate.getFullYear(),
+    pivotDate.getMonth() + 1, 
+    0,
+    23,
+    59,
+    59
+  ).getTime();
+  
+  // item.createdDate로 수정
+  return data.filter(
+    (item) => beginTime <= item.createdDate && item.createdDate <= endTime
+  );
+}
+
 function Home() {
-  // 현재 날짜를 연, 월, 일로 포맷팅
-  const today = new Date();
-  const formattedDate = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+  const data = useContext(DiaryStateContext);
+  const [pivotDate, setPivotDate] = useState(new Date());
+  const monthlyData = getMonthlyData(pivotDate, data);
+  console.log(monthlyData, '데이터'); // 결과 확인
+
+  function onIncreaseMonth() {
+    setPivotDate(new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1));
+  }
+
+  function onDecreaseMonth() {
+    setPivotDate(new Date(pivotDate.getFullYear(), pivotDate.getMonth() - 1));
+  }
 
   return (
     <div>
-      <Header title={formattedDate} leftChild={<Button text='<'/>} rightChild={<Button text='>'/>}/>
-      <DiaryList />
+      <Header
+        title={`${pivotDate.getFullYear()}년 ${pivotDate.getMonth() + 1}월`}
+        leftChild={<Button onClick={onDecreaseMonth} text="<" />}
+        rightChild={<Button onClick={onIncreaseMonth} text=">" />}
+      />
+      <DiaryList data={monthlyData} />
     </div>
   );
 }
