@@ -29,6 +29,12 @@ const mokData = [
     emotionId: 3,
     content: "3번 일기 내용",
   },
+  {
+    id: 4,
+    createdDate: new Date("2024-10-20").getTime(),
+    emotionId: 5,
+    content: "5번 일기 내용",
+  },
 ];
 
 function reducer(state, action) {

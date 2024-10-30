@@ -8,11 +8,11 @@ function DiaryItem({ id, emotionId, createdDate, content }) {
   const nav = useNavigate();
 
   return (
-    <div onClick={() => nav(`/diary/${id}`)} className="DiaryItem">
+    <div className="DiaryItem">
       <div className={`img_section img_section_${emotionId}`}>
         <img src={getEmotionImage(emotionId)} alt="이미지" />
       </div>
-      <div className="info_section">
+      <div onClick={() => nav(`/diary/${id}`)} className="info_section">
         <div className="created_date">
           {new Date(createdDate).toLocaleDateString()}
         </div>
